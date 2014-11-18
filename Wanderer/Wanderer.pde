@@ -4,14 +4,17 @@ PVector accel;
 int sz = 50;
 
 void setup() {
+
   size (700,700);
   colorMode(HSB, 360, 100, 100, 100);
   loc = new PVector (width/2, height/2);
   sz=50;
   vel=PVector.random2D();
   accel= new PVector (random(-.1, .1),random(-.1, .1));
+  background (0);
 }
 void draw() {
+    noStroke();
  accel= new PVector (random(-.1, .1),random(-.1, .1));
   fill(frameCount%360, 100, 100);
   vel.add (accel);
