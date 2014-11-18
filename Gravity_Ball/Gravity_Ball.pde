@@ -13,9 +13,9 @@ void setup(){
   y=height/2;
   sz=50;
   velx=0;
-  vely=1;
+  vely=4;
   accelx=0;
-  accely=.2;
+  accely=1;
 }
 void draw(){
 background(0);
@@ -24,7 +24,7 @@ velx+=accelx;
 vely+=accely;
 x+=velx;
 y+=vely;
-if (y+sz/2>=height){y=height-sz/2; vely=-abs(vely);}
+if (y+sz/2>height){y=height-sz/2; vely=-abs(vely);}
   
   
   
