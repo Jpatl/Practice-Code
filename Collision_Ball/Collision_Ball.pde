@@ -1,41 +1,58 @@
-PVector loc, vel, accel, mouse;
-int sz=70;
-void setup() {
-  size(700, 700);
-  loc= new PVector (width/2, height/2);
-  vel= PVector.random2D();
-  accel = new PVector (0, 0);
-  mouse= new PVector (mouseX, mouseY);
-  noCursor();
-}
-void draw() {
-  background (0);
-  mouse= new PVector (mouseX, mouseY);
-  if (loc.dist(mouse)<sz/2) {
-    fill(255, 0, 0);
-    if (loc.x <mouse.x) {
-      vel.x=-abs(vel.x);
-    } else {
-      vel.x=abs(vel.x);
-    }
-    if (loc.y <mouse.y) {
-      vel.y=-abs(vel.y);
-    } else {
-      vel.y=abs(vel.y);
-    }
-  } else {
-    fill(5, 233, 232);
-  }
+int toomanyproblems=100;
+int maggie= toomanyproblems;
+int count= maggie;
+PVector[] loc =new PVector [count];
+PVector[] vel =new PVector [count];
+PVector[] accel =new PVector [count];
+float[]sz= new float [count];
 
-  ellipse (loc.x, loc.y, sz, sz);
-  vel.add (accel);
-  loc.add (vel);
-  if (loc.x+sz/2>width || loc.x-sz/2<0) {
-    vel.x=vel.x*-1;
+void setup() {
+  size(800, 800);
+  for (int i=0; i<count; i++) { 
+    sz[i] = random (15, 25);
+    loc[i]= new PVector (random(sz[i], width-sz[i]), random (sz[i], height-sz[i]));
+    vel[i]= PVector.random2D();
+    accel [i]= new PVector (0, 0);
+    noCursor();
   }
-  if (loc.y+sz/2>height || loc.y-sz/2<0) {
-    vel.y=vel.y*-1;
-  }   
-  ellipse (mouse.x, mouse.y, 10, 10);
 }
+  void draw() {
+    background (0);
+    for ( int i=0; i<count; i++)
+    {
+      vel[i].add (accel[i]);
+      loc[i].add (vel[i]);
+
+      for ( int ii=0; ii<count; ii++)
+      {
+        if (i!=ii) {
+          if (loc[i].dist (loc[ii])< sz[i]/2+sz[ii]/2) {
+            if (loc[i].x < loc[ii].x) {   
+              vel[i].x = -abs(vel[i].x);
+              vel[ii].x = abs(vel[ii].x);
+            } else {
+              vel[i].x = abs(vel[i].x);
+              vel[ii].x = -abs(vel[ii].x);
+            }
+            if (loc[i].y < loc[ii].y) {   
+              vel[i].y = -abs(vel[i].y);
+              vel[ii].y = abs(vel[ii].y);
+            } else {
+              vel[i].y = abs(vel[i].y);
+              vel[ii].y = -abs(vel[ii].y);
+            }
+          }
+        }
+      }
+
+      ellipse (loc[i].x, loc[i].y, sz[i], sz[i]);
+
+      if (loc[i].x+sz[i]/2>width || loc[i].x-sz[i]/2<0) {
+        vel[i].x=vel[i].x*-1;
+      }
+      if (loc[i].y+sz[i]/2>height || loc[i].y-sz[i]/2<0) {
+        vel[i].y=vel[i].y*-1;
+      }
+    }
+  }
 
