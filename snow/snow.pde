@@ -15,7 +15,7 @@ void setup() {
   //initialize variables
   for (int i = 0; i < count; i++) {
     sz[i] = random(30, 40);
-    loc[i] = new PVector(random(width), random(-height*1.5, -sz[i]/2));
+    loc[i] = new PVector(random(width), random(-height*.5, -sz[i]/2));
     vel[i] = new PVector(0, random(1));
     acc[i] = new PVector(0, .01);
     theta[i] = random(TWO_PI);
