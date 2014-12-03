@@ -1,25 +1,28 @@
-Ball maggie;
-
+GravityBall maggie;
+GravityBall[] m= new GravityBall[100];
 
 void setup() {
   size (1280, 800);
-  maggie = new Ball();
-}
+ for (int i = 0; i < m.length; i++) {
+    m[i] = new GravityBall();
+}}
 void draw () {
   background (0);
-  maggie.move();
-  maggie.bounce();
-  maggie.display();
+    for (int i = 0; i < m.length; i++) {
+  m[i].display();
+  m[i].move();
+  m[i].bounce();
+    }
   
 }
-class Ball {
+class GravityBall {
   //these are the properties of our Ball class
   float sz;
   PVector loc, vel;
 
-  Ball() {
+  GravityBall() {
     sz = 50;
-    loc = new PVector(width/2, height/2);
+    loc = new PVector(random(sz,width/sz),random(height/2));
     vel = PVector.random2D();
   }
 
