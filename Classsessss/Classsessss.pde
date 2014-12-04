@@ -1,31 +1,36 @@
 GravityBall maggie;
-GravityBall[] m= new GravityBall[1500];
+GravityBall[] m= new GravityBall[500];
 
 void setup() {
-  size (1280, 800);
- for (int i = 0; i < m.length; i++) {
-    m[i] = new GravityBall();
-    colorMode( HSB, 360,100,100,100);
-}}
+  size (displayWidth, displayHeight);
+  for (int i = 0; i < m.length; i++) {
+    m[i] = new GravityBall(15,2);
+    colorMode( HSB, 360, 100, 100, 100);
+  }
+}
 void draw () {
   background (0);
-    for (int i = 0; i < m.length; i++) {
-  m[i].display();
-  m[i].move();
-  m[i].bounce();
-    }
-  
+  for (int i = 0; i < m.length; i++) {
+    m[i].display();
+    m[i].move();
+    m[i].bounce();
+    for (int j=0; j< GravityBall.length;j++){
+      if(i!=j){
+        GravityBall[i].collideWith(GravityBall[j]);}}
+  }
 }
 class GravityBall {
   //these are the properties of our Ball class
   float sz;
   PVector loc, vel;
+  float speed;
   float hue, sat, bright, alpha;
-  GravityBall() {
-    sz = 10;
-    
-    loc = new PVector(random(sz,width/sz),random(height/2));
+  GravityBall(float tempsz, float tempspeed) {
+    sz = tempsz;
+    loc = new PVector(random(sz, width-sz), random(sz, height-sz));
     vel = PVector.random2D();
+    speed = tempspeed;
+    vel.mult(speed);
     hue = random(360);
     sat = 100;
     bright = 100;
@@ -33,7 +38,7 @@ class GravityBall {
   }
 
   void display() {
-     fill(hue, sat, bright, alpha);
+    fill(hue, sat, bright, alpha);
     ellipse(loc.x, loc.y, sz, sz);
   }
 
@@ -49,6 +54,12 @@ class GravityBall {
       vel.y *= -1;
     }
   }
+  void collideWith(GravityBall someOtherBall) {
+    if (loc.dist(someOtherBall.loc) < sz/2 + someOtherBall.sz/2) {
+      vel = PVector.sub(loc, someOtherBall.loc);
+      vel.normalize();
+      vel.setMag(speed);
+    }
+  }
+
 }
-
-
