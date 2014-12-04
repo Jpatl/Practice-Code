@@ -14,9 +14,9 @@ void draw () {
     m[i].display();
     m[i].move();
     m[i].bounce();
-    for (int j=0; j< GravityBall.length;j++){
+    for (int j=0; j<m.length;j++){
       if(i!=j){
-        GravityBall[i].collideWith(GravityBall[j]);}}
+       m[i].collideWith(m[j]);}}
   }
 }
 class GravityBall {
