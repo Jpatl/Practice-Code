@@ -1,5 +1,5 @@
 GravityBall maggie;
-GravityBall[] m= new GravityBall[100];
+GravityBall[] m= new GravityBall[1500];
 
 void setup() {
   size (1280, 800);
@@ -22,7 +22,7 @@ class GravityBall {
   PVector loc, vel;
   float hue, sat, bright, alpha;
   GravityBall() {
-    sz = 50;
+    sz = 10;
     
     loc = new PVector(random(sz,width/sz),random(height/2));
     vel = PVector.random2D();
