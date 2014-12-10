@@ -14,7 +14,7 @@ void setup() {
   snowflake = loadImage("snowflake.png");
   //initialize variables
   for (int i = 0; i < count; i++) {
-    sz[i] = random(30, 40);
+    sz[i] = random(110, 40);
     loc[i] = new PVector(random(width), random(-height*.5, -sz[i]/2));
     vel[i] = new PVector(0, random(1));
     acc[i] = new PVector(0, .01);
@@ -36,7 +36,7 @@ void draw() {
     pushMatrix();
     translate(loc[i].x, loc[i].y);
     rotate(theta[i]);
-    image(snowflake, 0, 0, snowflake.width/sz[i], snowflake.height/sz[i]);
+    image(snowflake, 0, 0);
     popMatrix();
     //change horizontal acceleration
     acc[i].x = random(-.05, .05);
