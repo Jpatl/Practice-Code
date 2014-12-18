@@ -49,7 +49,7 @@ class Particle {
   boolean isDead() {
     if (loc.y+25 > height || loc.x > width ||loc.x < 0 || loc.y < 0) {
       return true;
-    } else if (dist(mouseX, mouseY, loc.x, loc.y) <sz/2) {
+    } else if (dist(mouseX, mouseY, loc.x, loc.y)-5 <sz/2) {
       return true;
     }
    else {
