@@ -1,60 +1,88 @@
-ArrayList<Particle> allMyParticles = new ArrayList<Particle>();
-PImage Bubbles;
+// FOR BACKGROUND MUSIC
+import ddf.minim.spi.*;
+import ddf.minim.signals.*;
+import ddf.minim.*;
+import ddf.minim.analysis.*;
+import ddf.minim.ugens.*;
+import ddf.minim.effects.*;
+
+Minim minim;
+AudioPlayer sou; // varible name;
+
+// FOR PARTICLE SUSTEM
+ArrayList<bubble> allBubbles = new ArrayList<bubble>();
+//IMAGES
+PImage BubblesBack;
 PImage Bubble;
+
+//SETUP
 void setup() {
- 
+  //TO POP BUBBLE
   imageMode (CENTER);
+  //TO MAKE SMOOTHER
   noStroke();
+  //CANVAS SIZE
   size(1024, 768);
-  Bubbles = loadImage("Untitled-1.jpg");
+  //LOADING OF IMAGES
+  BubblesBack = loadImage("Untitled-1.jpg");
   Bubble = loadImage("Untitled-2.png");
+  //BACKGROUND MUSIC
+  minim = new Minim(this);
+  sou= minim.loadFile("The Bubble Song - SpongeBob SquarePants.mp3");
+  sou.loop();
 }
-
+//DRAW
 void draw() {
-  background (Bubbles);
+  //BACKGROUND
+  background (BubblesBack);
+  //ADD BUBBLES
   if (mousePressed) {
-    allMyParticles.add(new Particle());
+    allBubbles.add(new bubble());
   }
-
-  for (int i = allMyParticles.size ()-1; i >= 0; i--) {
-    Particle currentParticle = allMyParticles.get(i);
-    currentParticle.display();
-    currentParticle.move();
-    if (currentParticle.isDead()) {
-      allMyParticles.remove(i);
+  //CONTROLL PROP. OF INDIVIDUAL BUBBLES
+  for (int b = allBubbles.size ()-1; b >= 0; b--) {
+    bubble currentbubble = allBubbles.get(b);
+    //SHOW BUBBLE
+    currentbubble.display();
+    //MOVE BUBBLE
+    currentbubble.move();
+    //REMOVE BUBBLE ACCORDING TO BOOL    
+    if (currentbubble.PopBubble()) {
+      allBubbles.remove(b);
     }
   }
 }
-
-class Particle {
+// BUBBLE
+class bubble {
+  //STATE VARIABLES
   PVector loc, vel, acc;
   float sz;
-
-  Particle() {
-    loc = new PVector(width/2-40, height/2-140);
+  //INITIALIZE VARIABLES
+  bubble() {
+    loc = new PVector(width/2-30, height/2-130);
     vel = new PVector(random(-3, 0), random(-4, 0));
     acc = new PVector(0, .01);
     sz = random (25, 35);
   }
-
+  //SHOWING OF BUBBLES
   void display() {
     image(Bubble, loc.x, loc.y, sz, sz);
   }
-
+  //MOVING OF BUBBLES
   void move() {
     vel.add(acc);
     loc.add(vel);
   }
-
-  boolean isDead() {
+  //SHOULD BUBBLE BE REMOVED?
+  boolean PopBubble() {
     if (loc.y+25 > height || loc.x > width ||loc.x < 0 || loc.y < 0) {
       return true;
+      //POP BUBBLE WITH MOUSE
     } else if (dist(mouseX, mouseY, loc.x, loc.y)-5 <sz/2) {
       return true;
+    } else {
+      return false;
     }
-   else {
-    return false;
   }
-}
 }
 
