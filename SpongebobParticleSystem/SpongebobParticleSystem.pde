@@ -80,6 +80,7 @@ class bubble {
       //POP BUBBLE WITH MOUSE
     } else if (dist(mouseX, mouseY, loc.x, loc.y)-5 <sz/2) {
       return true;
+      //IF OUTSIDE BORDERS
     } else {
       return false;
     }
